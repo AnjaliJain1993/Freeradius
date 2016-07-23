@@ -18,10 +18,10 @@ if($status=="Start"&& $row==NULL){
 	echo "Reject";
 }
 else if($status=="Start"&& $row!=NULL){
-// 	$query1="DELETE FROM acctstart where User_Name='$user' and Session_Id='$sessionid'";
-//        $ret1=mysql_query($query1);
-//        $query="INSERT INTO acctstart VALUES ('$user','$sessionid',ADDTIME(now(),'05:30:00'))";
- //       $ret=mysql_query($query);
+// //	$query1="DELETE FROM acctstart where User_Name='$user' and Session_Id='$sessionid'";
+//   //     $ret1=mysql_query($query1);
+//     //   $query="INSERT INTO acctstart VALUES ('$user','$sessionid',ADDTIME(now(),'05:30:00'))";
+ //      // $ret=mysql_query($query);
 	$query="UPDATE acctstart SET Time_Stamp=ADDTIME(now(),'05:30:00') WHERE User_Name='$user' and Session_Id='$sessionid'";
 	$ret=mysql_query($query);
         echo "Accounting response";
