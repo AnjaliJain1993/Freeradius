@@ -437,6 +437,12 @@ accounting {
 #	Acct-Type Status-Server {
 #	update control{
 	if( Acct-Status-Type == Interim-Update){
+		if("%{sql:SELECT radacct.acctsessiontime FROM `radacct` WHERE radacct.username=\"%{User-Name}\" and radacct.acctuniqueid=\"%{Acct-Unique-Session-Id}\" and radacct.acctsessiontime>60}"){
+                        update reply{
+                                Reply-Message+="Session timeout"
+                        }
+                }
+
 		if("%{sql:SELECT radacct.acctinputoctets FROM `radacct` WHERE radacct.username=\"%{User-Name}\" and radacct.acctuniqueid=\"%{Acct-Unique-Session-Id}\" and radacct.acctinputoctets<20 and radacct.acctinputoctets>0}"){
 			update reply{
 				Reply-Message+="Less than 20 mb left for downloading"
