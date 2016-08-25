@@ -437,13 +437,16 @@ accounting {
 	#
 #	Acct-Type Status-Server {
 #	update control{
+	if( Acct-Status-Type == Start){
+		"%{sql:INSERT into dailyusers values('%{User-Name}',CURDATE(),0)}"
+	}
 	if( Acct-Status-Type == Interim-Update){
+		"%{sql:UPDATE dailyusers SET input_data_usage=input_data_usage+%{Acct-Input-Octets} WHERE user = '%{User-Name}'}"
 		if("%{sql:SELECT radacct.acctsessiontime FROM `radacct` WHERE radacct.username=\"%{User-Name}\" and radacct.acctuniqueid=\"%{Acct-Unique-Session-Id}\" and radacct.acctsessiontime>60}"){
                         update reply{
                                 Reply-Message+="Session timeout"
                         }
                 }
-
 		if("%{sql:SELECT radacct.acctinputoctets FROM `radacct` WHERE radacct.username=\"%{User-Name}\" and radacct.acctuniqueid=\"%{Acct-Unique-Session-Id}\" and radacct.acctinputoctets<20 and radacct.acctinputoctets>0}"){
 			update reply{
 				Reply-Message+="Less than 20 mb left for downloading"
