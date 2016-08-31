@@ -177,7 +177,6 @@ authorize {
 	#  Look in an SQL database.  The schema of the database
 	#  is meant to mirror the "users" file.
 	#
-	"%{sql:radius_db:=\"radius\"}"
 	#  See "Authorization Queries" in sql.conf
 	sql
 
